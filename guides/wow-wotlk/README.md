@@ -64,6 +64,22 @@ Everything you need to let other players connect to your server — on the same 
 
 ### 🖥️ Daily Use — Server Controls
 
+#### [Synthetic Players](./synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md)
+
+Adds local-LLM persona dialogue and audited, bounded mage actions to persistent
+Playerbot characters while leaving movement, combat, and raid mechanics under
+`mod-playerbots`.
+
+#### [Playerbots Raid Operations](./PLAYERBOTS-RAID-OPERATIONS.md)
+
+Explains the installed Icecrown Citadel strategies, realistic limitations, and
+a safe recovery sequence when a raid boss does not return after a GM kill.
+
+#### [Level-255 GM Equipment](./gm-level-255/README.md)
+
+Documents the Confluent Vanguard test set, its ALE-managed all-stat multiplier,
+and the required client `Item.dbc` patch for shield-dependent paladin abilities.
+
 #### [WoW-WotLK-CONTROLS-1.md](./WoW-WotLK-CONTROLS-1.md)
 **Platform: All (Steam Deck · Ubuntu/Debian · Fedora · Windows WSL2)**
 

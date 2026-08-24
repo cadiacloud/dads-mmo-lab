@@ -1,2 +1,9 @@
 .DS_store
 .vscode
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/

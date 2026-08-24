@@ -124,6 +124,9 @@ Turns out — for a lot of classic MMOs — you can. The emulator community has 
 | `WoW-WotLK-CONTROLS-2.md` | Server management reference — Part 2 (GM console, troubleshooting) |
 | `WoW-WotLK-CREATE-ACCOUNTS.md` | Quick reference for creating player accounts |
 | `WoW-Playerbots-Windows-HOWTO.md` | Windows-specific Playerbots setup guide |
+| `synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md` | Local-LLM persona bridge with bounded, verified mage actions |
+| `PLAYERBOTS-RAID-OPERATIONS.md` | ICC strategy coverage and boss-recovery runbook |
+| `gm-level-255/README.md` | Level-255 GM equipment, ALE stat bonus, and client DBC patch |
 | `ALE-Kegs/` | Optional Eluna Lua mods (Black Market AH, Season of Discovery) |
 
 ### Wrath Unbound Add-on (`guides/unbound-wrath/`)

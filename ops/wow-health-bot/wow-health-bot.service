@@ -1,0 +1,19 @@
+[Unit]
+Description=Discord broadcaster for private WoW realm health
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/wow-health-bot/env
+ExecStart=/usr/bin/python %h/devpool/wow-project/ops/wow-health-bot/wow_health_bot.py
+Restart=always
+RestartSec=15
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.local/state/wow-health-bot
+
+[Install]
+WantedBy=default.target

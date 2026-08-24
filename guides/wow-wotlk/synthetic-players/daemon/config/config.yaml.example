@@ -1,0 +1,28 @@
+# ============================================================================
+# Dad's MMO Lab: Synthetic Players Daemon Configuration
+# ============================================================================
+
+llm:
+  # Base URL for local vLLM endpoint
+  api_base: "http://127.0.0.1:8000/v1"
+  api_key: "EMPTY"
+
+  # Model identifier exposed by your OpenAI-compatible local endpoint
+  model: "your-served-model"
+  temperature: 0.7
+  top_p: 0.9
+  max_tokens: 150
+  timeout_seconds: 15.0
+
+db:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "password"
+  database: "acore_characters"
+  pool_min_size: 1
+  pool_max_size: 5
+
+poll_interval_ms: 500
+max_batch_size: 5
+debug: false
