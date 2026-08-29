@@ -1,0 +1,68 @@
+[worldserver]
+
+########################################
+# Cadia Player Director
+########################################
+#
+#    CadiaPlayerDirector.Enable
+#        Description: Enable the typed high-level Playerbots intent executor.
+#        Default:     1
+#
+#    CadiaPlayerDirector.PollIntervalMs
+#        Description: Pending-intent database poll interval.
+#        Default:     250
+#
+#    CadiaPlayerDirector.SnapshotIntervalMs
+#        Description: Bounded persona-bot state snapshot interval.
+#        Default:     1000
+#
+#    CadiaPlayerDirector.BatchSize
+#        Description: Maximum intents claimed per poll.
+#        Default:     10
+#
+#    CadiaPlayerDirector.VerificationTimeoutMs
+#        Description: Attack/pull verification deadline.
+#        Default:     15000
+#
+#    CadiaPlayerDirector.EconomyIntervalMs
+#        Description: Background controlled-persona economy cycle interval. Cycles
+#                     pause while a real player is actively leading the bot.
+#        Default:     120000
+#
+#    CadiaPlayerDirector.ProfessionIntervalMs
+#        Description: Active profession-objective poll interval.
+#        Default:     5000
+#
+#    CadiaPlayerDirector.ProfessionAutoTrainRanks
+#        Description: Train the next gathering rank when its skill and character-
+#                     level requirements are met. Never grants skill points.
+#        Default:     1
+#
+#    CadiaPlayerDirector.ProfessionProvisionTools
+#        Description: Provision only the inexpensive gathering tool declared by
+#                     the validated objective (mining pick or skinning knife).
+#        Default:     1
+#
+#    CadiaPlayerDirector.ProfessionMaxGatheringSkills
+#        Description: Max only gathering professions already assigned to a
+#                     controlled persona. The bots gather kits for real players;
+#                     they do not consume the kits to level themselves.
+#        Default:     1
+#
+#    CadiaPlayerDirector.ProfessionGrantTaxiNodes
+#        Description: Grant every faction-compatible WotLK taxi node to controlled
+#                     personas without granting a GM security rank.
+#        Default:     1
+#
+
+CadiaPlayerDirector.Enable = 1
+CadiaPlayerDirector.PollIntervalMs = 250
+CadiaPlayerDirector.SnapshotIntervalMs = 1000
+CadiaPlayerDirector.BatchSize = 10
+CadiaPlayerDirector.VerificationTimeoutMs = 15000
+CadiaPlayerDirector.EconomyIntervalMs = 120000
+CadiaPlayerDirector.ProfessionIntervalMs = 5000
+CadiaPlayerDirector.ProfessionAutoTrainRanks = 1
+CadiaPlayerDirector.ProfessionProvisionTools = 1
+CadiaPlayerDirector.ProfessionMaxGatheringSkills = 1
+CadiaPlayerDirector.ProfessionGrantTaxiNodes = 1

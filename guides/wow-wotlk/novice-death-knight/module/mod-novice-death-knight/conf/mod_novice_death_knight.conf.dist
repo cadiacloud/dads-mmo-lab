@@ -1,0 +1,36 @@
+[worldserver]
+
+########################################
+# Novice Death Knight
+########################################
+#
+#    NoviceDeathKnight.Enable
+#        Description: Enroll newly created Death Knights into the level 1
+#                     progression and activate behavior for enrolled characters.
+#        Default:     0
+#
+#    NoviceDeathKnight.ScaleSpellDamage
+#        Description: Scale non-weapon Death Knight spell damage below level 55.
+#        Default:     1
+#
+#    NoviceDeathKnight.MinimumDamageScale
+#        Description: Minimum multiplier for scaled Death Knight spell damage.
+#        Range:       0.01-1.00
+#        Default:     0.10
+#
+#    NoviceDeathKnight.Announce
+#        Description: Show a short explanation on an enrolled character's first
+#                     login.
+#        Default:     1
+#
+#    NoviceDeathKnight.AllowInternalSessions
+#        Description: Permit characters created by empty/internal sessions,
+#                     including Playerbot factories, to be enrolled.
+#        Default:     0
+#
+
+NoviceDeathKnight.Enable = 0
+NoviceDeathKnight.ScaleSpellDamage = 1
+NoviceDeathKnight.MinimumDamageScale = 0.10
+NoviceDeathKnight.Announce = 1
+NoviceDeathKnight.AllowInternalSessions = 0

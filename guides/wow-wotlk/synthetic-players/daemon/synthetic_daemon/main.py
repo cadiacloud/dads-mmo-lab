@@ -16,6 +16,8 @@ from .db import DatabaseManager
 from .engine import SyntheticEngine
 from .llm_client import SyntheticLLMClient
 from .persona import PersonaManager
+from .profession_planner import ProfessionPlanner
+from .material_kit_planner import MaterialKitPlanner
 
 app = typer.Typer(help="Dad's MMO Lab: Synthetic Players Persona Bridge")
 console = Console()
@@ -121,7 +123,12 @@ def health(
 
 @app.command()
 def test_chat(
-    bot: str = typer.Option("Brog", "--bot", "-b", help="Bot name (e.g. Brog, Lyra, Theron, Fizwick)"),
+    bot: str = typer.Option(
+        "Lyra",
+        "--bot",
+        "-b",
+        help="Controlled bot name (Lyra, Celene, Ray, or Browntown)",
+    ),
     message: str = typer.Argument(..., help="Message to send to the bot"),
     model: Optional[str] = typer.Option(None, "--model", "-m", help="Override model name"),
     api_base: Optional[str] = typer.Option(None, "--api-base", help="Override LLM endpoint"),
@@ -177,6 +184,99 @@ def init_db(
             console.print(f"[bold red]✗ Database initialization failed:[/bold red] {e}")
 
     asyncio.run(_init())
+
+
+@app.command("plan-professions")
+def plan_professions(
+    config: Optional[str] = typer.Option(None, "--config", "-c", help="Path to config.yaml"),
+    guides: Optional[str] = typer.Option(None, "--guides", help="Path to profession-guides.yaml"),
+    bot: list[str] = typer.Option([], "--bot", help="Limit planning to one or more controlled bot names"),
+    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override LLM model name"),
+    api_base: Optional[str] = typer.Option(None, "--api-base", help="Override vLLM / LLM endpoint"),
+    activate: bool = typer.Option(False, "--activate", help="Persist and activate validated objectives"),
+) -> None:
+    """Have the local LLM choose allowlisted 1-450 routes and activate objectives."""
+    setup_logging(False)
+    if not activate:
+        raise typer.BadParameter("--activate is required because this command writes live objectives")
+
+    settings = load_settings(config)
+    if model:
+        settings.llm.model = model
+    if api_base:
+        settings.llm.api_base = api_base
+    guides_file = guides or settings.profession_guides_file
+
+    async def _plan() -> None:
+        planner = ProfessionPlanner(settings, guides_file)
+        try:
+            plan_id, assignments, objective_count = await planner.create_and_activate(bot or None)
+            table = Table(title=f"Activated Profession Plan #{plan_id}")
+            table.add_column("Bot", style="cyan")
+            table.add_column("Profession", style="magenta")
+            table.add_column("Current", justify="right")
+            table.add_column("Stages", justify="right")
+            for assignment in assignments:
+                table.add_row(
+                    assignment.bot_name,
+                    assignment.profession_name,
+                    str(assignment.current_skill),
+                    str(len(assignment.stage_zones)),
+                )
+            console.print(table)
+            console.print(
+                f"[green]Activated {objective_count} validated objectives.[/green] "
+                "The worldserver executor will pause for character-level gates, gather with "
+                "the party, route only unattended bots, and deposit eligible materials."
+            )
+        finally:
+            await planner.close()
+
+    asyncio.run(_plan())
+
+
+@app.command("plan-material-kits")
+def plan_material_kits(
+    config: Optional[str] = typer.Option(None, "--config", "-c", help="Path to config.yaml"),
+    catalog: Optional[str] = typer.Option(None, "--catalog", help="Path to material-kits.yaml"),
+    profession: list[str] = typer.Option(
+        [], "--profession", help="One or more 1-450 kits (alchemy, inscription, jewelcrafting, engineering, tailoring)"
+    ),
+    model: Optional[str] = typer.Option(None, "--model", "-m", help="Override LLM model name"),
+    api_base: Optional[str] = typer.Option(None, "--api-base", help="Override vLLM / LLM endpoint"),
+    activate: bool = typer.Option(False, "--activate", help="Persist and activate validated targets"),
+) -> None:
+    """Allocate and activate source-backed material kits for real players."""
+    setup_logging(False)
+    if not activate:
+        raise typer.BadParameter("--activate is required because this command writes live targets")
+
+    selected = profession or ["alchemy", "inscription", "jewelcrafting", "engineering", "tailoring"]
+    settings = load_settings(config)
+    if model:
+        settings.llm.model = model
+    if api_base:
+        settings.llm.api_base = api_base
+    catalog_file = catalog or settings.material_kits_file
+
+    async def _plan() -> None:
+        planner = MaterialKitPlanner(settings, catalog_file)
+        try:
+            plan_id, assignment, target_count = await planner.create_and_activate(selected)
+            table = Table(title=f"Activated Material Kit Plan #{plan_id}")
+            table.add_column("Mode", style="magenta")
+            table.add_column("Qualified work order", style="cyan")
+            for route in assignment.routes:
+                table.add_row(route.mode, ", ".join(route.bot_names))
+            console.print(table)
+            console.print(
+                f"[green]Activated {target_count} validated material targets.[/green] "
+                "Fixed catalog quantities and real guild-bank counts remain authoritative."
+            )
+        finally:
+            await planner.close()
+
+    asyncio.run(_plan())
 
 
 if __name__ == "__main__":

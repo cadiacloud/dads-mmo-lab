@@ -23,6 +23,20 @@ db:
   pool_min_size: 1
   pool_max_size: 5
 
+director:
+  # The daemon only writes typed intents. The worldserver-side
+  # mod-cadia-player-director performs authorization and execution.
+  enabled: true
+  intent_ttl_seconds: 30
+  result_batch_size: 5
+
 poll_interval_ms: 500
 max_batch_size: 5
+profession_guides_file: "config/profession-guides.yaml"
+material_kits_file: "config/material-kits.yaml"
+controlled_personas:
+  - "Lyra"
+  - "Celene"
+  - "Ray"
+  - "Browntown"
 debug: false

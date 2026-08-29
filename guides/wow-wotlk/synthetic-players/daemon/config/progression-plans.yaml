@@ -1,0 +1,149 @@
+version: 1
+game_build: "Wrath of the Lich King 3.3.5a (12340)"
+status: "owner-directed operational policy"
+personas:
+  lyra:
+    character: "Lyra"
+    role: "ranged DPS, crowd control, portals, provisions, party intellect"
+    specialization:
+      primary: "Fire / Torment the Weak"
+      activation_condition: "Use when actual gear reaches the applicable hit cap and supplies enough crit for consistent Hot Streak value."
+      fallback: "Arcane remains a gear-aware fallback before the Fire thresholds are met."
+    stat_policy:
+      order:
+        - "applicable spell hit cap"
+        - "spell power"
+        - "critical strike"
+        - "haste"
+        - "spirit"
+        - "intellect"
+      constraints:
+        - "17% total spell hit; 14% gear hit (367 rating) when a 3% raid debuff is reliably present."
+        - "Recompute caps and compare complete gear sets; do not maximize isolated item level."
+    professions:
+      endgame: ["Engineering", "Tailoring"]
+      irreversible_change_requires_owner_approval: true
+    group_priorities:
+      - "Execute assigned Polymorph before damage."
+      - "Keep the applicable intellect raid buff available."
+      - "Provide the highest known refreshment table out of combat."
+      - "Use Slow Fall only on an authorized request and report verification."
+    sources:
+      - "https://www.wowhead.com/wotlk/guide/classes/mage/fire/dps-overview-pve"
+      - "https://www.wowhead.com/wotlk/guide/classes/mage/fire/dps-stat-priority-attributes-pve"
+      - "https://www.wowhead.com/wotlk/guide/classes/mage/fire/dps-bis-gear-pve-phase-4"
+
+  celene:
+    character: "Celene"
+    role: "melee DPS, sap/stun control, reconnaissance, gathering"
+    specialization:
+      primary: "Combat"
+      activation_condition: "Cap-aware raid setup using the best available weapon pair and actual raid composition."
+    stat_policy:
+      order:
+        - "applicable hit caps"
+        - "expertise cap"
+        - "agility and attack power"
+        - "armor penetration as late-ICC gear makes it efficient"
+        - "haste and critical strike without overcapping"
+      constraints:
+        - "Re-evaluate gemming as ICC armor penetration gear accumulates."
+        - "Never overcap expertise, hit, or crit merely to copy a static BiS list."
+    professions:
+      staged:
+        - ["Mining", "Engineering"]
+        - ["Engineering", "Jewelcrafting"]
+      transition_condition: "Propose the Mining replacement only after an ore reserve and healthy market supply exist."
+      irreversible_change_requires_owner_approval: true
+    group_priorities:
+      - "Execute assigned Sap before combat."
+      - "Use a verified stun when requested and mechanically possible."
+      - "Gather only with learned professions and an active bounded farming goal."
+      - "Share ordinary useful materials with the party before private profit."
+    sources:
+      - "https://www.wowhead.com/wotlk/guide/classes/rogue/combat/dps-overview-pve"
+      - "https://www.wowhead.com/wotlk/guide/classes/rogue/combat/dps-stat-priority-attributes-pve"
+      - "https://www.wowhead.com/wotlk/guide/classes/rogue/combat/dps-bis-gear-pve-phase-4"
+      - "https://www.wowhead.com/wotlk/guide/classes/rogue/combat/dps-bis-gear-pre-raid-pve-p4"
+
+  ray:
+    character: "Ray"
+    starting_state: "Persistent level-1 altbot; earns experience, gear, skills, and gold through normal group play."
+    role: "melee DPS, scout, crowd control, miner, skinner"
+    specialization:
+      primary: "Combat PvE"
+      activation_condition: "Apply the configured Combat PvE premade template when talent points become available at level 10 and refresh it after later level gains."
+    weapon_policy:
+      main_hand: "Prefer a slow, high-damage main hand; prefer an axe when otherwise equivalent to use Orc Axe Specialization."
+      off_hand: "Prefer a fast off hand for poison application unless the current ability mix makes another available weapon materially better."
+    stat_policy:
+      order:
+        - "applicable special-attack and poison hit thresholds"
+        - "expertise cap"
+        - "agility and attack power"
+        - "armor penetration when later gear makes it efficient"
+        - "haste and critical strike without overcapping"
+      constraints:
+        - "Compare complete upgrades at the character's real level; never equip level-inappropriate generated gear."
+        - "Do not request free levels, gear, gold, or skills."
+    professions:
+      permanent: ["Mining", "Skinning"]
+      irreversible_change_requires_owner_approval: true
+    group_priorities:
+      - "Level with the real-player group and remain close to its progression."
+      - "Execute Sap and stun assignments before ordinary damage."
+      - "Mine and skin eligible nearby nodes and corpses while traveling."
+      - "Share ordinary useful materials with the party before private profit."
+    sources:
+      - "https://www.wowhead.com/wotlk/guide/classes/rogue/combat/dps-overview-pve"
+      - "https://www.wowhead.com/wotlk/guide/classes/rogue/combat/dps-stat-priority-attributes-pve"
+
+  browntown:
+    character: "Browntown"
+    starting_state: "Persistent level-1 altbot; earns experience, gear, skills, and gold through normal group play."
+    role: "ranged DPS, crowd control, provisions, party intellect, herbalist, miner"
+    specialization:
+      primary: "Frost PvE leveling"
+      activation_condition: "Apply the configured Frost PvE premade template when talent points become available at level 10 and refresh it after later level gains."
+      endgame_review: "Propose a cap-aware transition only after actual equipment and raid composition justify it."
+    stat_policy:
+      order:
+        - "applicable spell hit cap"
+        - "spell power"
+        - "haste"
+        - "critical strike"
+        - "intellect and spirit"
+      constraints:
+        - "Compare complete upgrades at the character's real level; never equip level-inappropriate generated gear."
+        - "Do not request free levels, gear, gold, or skills."
+    professions:
+      permanent: ["Herbalism", "Mining"]
+      irreversible_change_requires_owner_approval: true
+    group_priorities:
+      - "Level with the real-player group and remain close to its progression."
+      - "Execute assigned Polymorph before ordinary damage."
+      - "Keep the highest learned intellect buff and refreshments available."
+      - "Gather eligible herbs and ore while traveling and share useful materials."
+    sources:
+      - "https://www.wowhead.com/wotlk/guide/classes/mage/frost/dps-overview-pve"
+      - "https://www.wowhead.com/wotlk/guide/classes/mage/frost/dps-stat-priority-attributes-pve"
+
+economy:
+  values:
+    - "loyal to group"
+    - "generous with ordinary useful resources"
+    - "accept ordinary trade and mail"
+    - "never fabricate economic success"
+  autonomous_limits:
+    enabled_now:
+      - "nearby grind and gather strategy activation"
+      - "native Playerbots direct trade and mail"
+      - "bounded character-owned auction listing and useful-item purchasing"
+      - "bounded profession-aware crafting and mailbox collection"
+      - "bounded gold sharing through normal in-game mail"
+      - "official pinned market-maker supply and player-auction liquidity"
+    candidate_only:
+      - "profession replacement"
+      - "unbounded or model-selected gear purchases"
+      - "large or unbounded gold transfers"
+      - "long-duration unattended routes"

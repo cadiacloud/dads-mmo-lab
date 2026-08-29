@@ -64,11 +64,30 @@ Everything you need to let other players connect to your server — on the same 
 
 ### 🖥️ Daily Use — Server Controls
 
+#### [Cadia Realm Deployment Record (2026-08-29)](./SERVER-CHANGES-2026-08-29.md)
+
+Records the reproducible server changes, effective runtime settings, installed
+module revisions, validation evidence, client compatibility requirements, known
+limitations, and rollback boundaries for the current Cadia WotLK deployment.
+Machine-local credentials, account identities, network addresses, and private
+conversation data are intentionally excluded.
+
 #### [Synthetic Players](./synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md)
 
-Adds local-LLM persona dialogue and audited, bounded mage actions to persistent
-Playerbot characters while leaving movement, combat, and raid mechanics under
-`mod-playerbots`.
+Adds local-LLM persona dialogue, audited mage actions, and a typed high-level
+director for persistent Playerbot characters. The LLM chooses bounded goals;
+`mod-playerbots` retains movement, combat, pathfinding, rotations, and raid
+mechanics.
+
+The current autonomous mission provisions each controlled persona's existing
+gathering professions to 450/450 and tracks source-backed, choice-declared
+1–450 material-kit routes for real players. Probabilistic/cooldown finishing
+steps remain visible instead of being claimed as guaranteed. Invitations use
+an explicit report-or-continue decision and do not auto-summon the bot.
+
+The [controlled persona-bot operations guide](./synthetic-players/LYRA-CELENE-OPERATIONS.md)
+lists the verified commands, raid authority model, WotLK min-max sources,
+profession staging, compatible addons, and the exact auction-house boundary.
 
 #### [Playerbots Raid Operations](./PLAYERBOTS-RAID-OPERATIONS.md)
 

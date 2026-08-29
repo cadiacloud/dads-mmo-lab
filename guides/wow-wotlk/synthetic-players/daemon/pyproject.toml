@@ -1,7 +1,7 @@
 [project]
 name = "synthetic-players-daemon"
-version = "0.1.0"
-description = "Local-LLM persona and bounded-action bridge for AzerothCore WoW WotLK"
+version = "0.2.0"
+description = "Local-LLM persona and typed Playerbots director bridge for AzerothCore WoW WotLK"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

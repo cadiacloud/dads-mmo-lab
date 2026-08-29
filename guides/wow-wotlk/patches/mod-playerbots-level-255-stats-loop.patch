@@ -1,0 +1,12 @@
+diff --git a/src/Bot/RandomPlayerbotMgr.cpp b/src/Bot/RandomPlayerbotMgr.cpp
+index 10629c2f..79452eb9 100644
+--- a/src/Bot/RandomPlayerbotMgr.cpp
++++ b/src/Bot/RandomPlayerbotMgr.cpp
+@@ -2814,3 +2814,6 @@ void RandomPlayerbotMgr::PrintStats()
+-    for (uint8 i = 1; i <= maxBotLevel; ++i)
++    // Keep the iterator wider than maxBotLevel. A level-255 managed bot makes
++    // uint8 wrap to zero after 255, so the old loop never terminated and
++    // blocked the world thread while continuously logging bot statistics.
++    for (uint32 i = 1; i <= maxBotLevel; ++i)
+     {
+         currentAlliance += alliance[i];

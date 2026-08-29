@@ -124,7 +124,10 @@ Turns out — for a lot of classic MMOs — you can. The emulator community has 
 | `WoW-WotLK-CONTROLS-2.md` | Server management reference — Part 2 (GM console, troubleshooting) |
 | `WoW-WotLK-CREATE-ACCOUNTS.md` | Quick reference for creating player accounts |
 | `WoW-Playerbots-Windows-HOWTO.md` | Windows-specific Playerbots setup guide |
-| `synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md` | Local-LLM persona bridge with bounded, verified mage actions |
+| `SERVER-CHANGES-2026-08-29.md` | Dated Cadia realm deployment, validation, compatibility, and rollback record |
+| `synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md` | Local-LLM persona bridge with typed, authorized Playerbots direction |
+| `novice-death-knight/README.md` | Opt-in level-1 Death Knight progression module and rollback guide |
+| `patches/` | Reviewed compatibility patches used by the recorded deployment |
 | `PLAYERBOTS-RAID-OPERATIONS.md` | ICC strategy coverage and boss-recovery runbook |
 | `gm-level-255/README.md` | Level-255 GM equipment, ALE stat bonus, and client DBC patch |
 | `ALE-Kegs/` | Optional Eluna Lua mods (Black Market AH, Season of Discovery) |

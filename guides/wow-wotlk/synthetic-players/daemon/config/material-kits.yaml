@@ -1,0 +1,149 @@
+version: 1
+game_version: "Wrath of the Lich King 3.3.5a"
+quantity_basis: "Guide shopping-list quantities plus the declared finishing route; alternatives are resolved locally without allowing the model to change counts. Yellow/green skill-up RNG can still require a refill."
+sources:
+  alchemy: "https://www.wow-professions.com/wotlk/alchemy-leveling-guide-wotlk-classic"
+  inscription: "https://www.wow-professions.com/wotlk/inscription-leveling-guide-wotlk-classic"
+  jewelcrafting: "https://www.wow-professions.com/wotlk/jewelcrafting-leveling-guide-wotlk-classic"
+  engineering: "https://www.wow-professions.com/wotlk/engineering-leveling-guide-wotlk-classic"
+  tailoring: "https://www.wow-professions.com/wotlk/tailoring-leveling-guide-wotlk-classic"
+
+# Acquisition modes are deterministic capabilities, not LLM claims:
+# herbalism/mining/skinning use the named learned skill; loot uses normal
+# Playerbots mob looting; auction is tracked but never reported as gathered.
+# Bars are represented as raw ore so the real player leveling the profession
+# receives the smelting opportunity. Vendor reagents are intentionally omitted.
+kits:
+  alchemy:
+    display_name: "Alchemy 1-450 (Flask of the Frost Wyrm finish)"
+    route_note: "The fixed 430-435 Earthsiege route and 435-450 Frost Wyrm flask route replace the guide's open alternatives. Pygmy Suckerfish remains an explicit non-harvest procurement target."
+    materials:
+      - {name: Peacebloom, count: 65, mode: herbalism, zone: Durotar, zone_id: 14}
+      - {name: Silverleaf, count: 65, mode: herbalism, zone: Durotar, zone_id: 14}
+      - {name: Briarthorn, count: 100, mode: herbalism, zone: The Barrens, zone_id: 17}
+      - {name: Bruiseweed, count: 35, mode: herbalism, zone: The Barrens, zone_id: 17}
+      - {name: Mageroyal, count: 20, mode: herbalism, zone: The Barrens, zone_id: 17}
+      - {name: Stranglekelp, count: 50, mode: herbalism, zone: Stranglethorn Vale, zone_id: 33}
+      - {name: Liferoot, count: 35, mode: herbalism, zone: Wetlands, zone_id: 11}
+      - {name: Kingsblood, count: 35, mode: herbalism, zone: Hillsbrad Foothills, zone_id: 267}
+      - {name: Goldthorn, count: 35, mode: herbalism, zone: Arathi Highlands, zone_id: 45}
+      - {name: Wild Steelbloom, count: 5, mode: herbalism, zone: Arathi Highlands, zone_id: 45}
+      - {name: Sungrass, count: 75, mode: herbalism, zone: The Hinterlands, zone_id: 47}
+      - {name: Khadgar's Whisker, count: 15, mode: herbalism, zone: The Hinterlands, zone_id: 47}
+      - {name: Purple Lotus, count: 4, mode: herbalism, zone: Tanaris, zone_id: 440}
+      - {name: Firebloom, count: 4, mode: herbalism, zone: Tanaris, zone_id: 440}
+      - {name: Arthas' Tears, count: 45, mode: herbalism, zone: Western Plaguelands, zone_id: 28}
+      - {name: Blindweed, count: 60, mode: herbalism, zone: Swamp of Sorrows, zone_id: 8}
+      - {name: Golden Sansam, count: 120, mode: herbalism, zone: Felwood, zone_id: 361}
+      - {name: Mountain Silversage, count: 40, mode: herbalism, zone: Winterspring, zone_id: 618}
+      - {name: Felweed, count: 35, mode: herbalism, zone: Hellfire Peninsula, zone_id: 3483}
+      - {name: Terocone, count: 5, mode: herbalism, zone: Terokkar Forest, zone_id: 3519}
+      - {name: Dreaming Glory, count: 45, mode: herbalism, zone: Nagrand, zone_id: 3518}
+      - {name: Netherbloom, count: 10, mode: herbalism, zone: Netherstorm, zone_id: 3523}
+      - {name: Talandra's Rose, count: 24, mode: herbalism, zone: Zul'Drak, zone_id: 66}
+      - {name: Pygmy Suckerfish, count: 5, mode: auction, zone: Orgrimmar, zone_id: 1637}
+      - {name: Goldclover, count: 90, mode: herbalism, zone: Borean Tundra, zone_id: 3537}
+      - {name: Tiger Lily, count: 35, mode: herbalism, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Adder's Tongue, count: 34, mode: herbalism, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Icethorn, count: 95, mode: herbalism, zone: The Storm Peaks, zone_id: 67}
+      - {name: Lichbloom, count: 115, mode: herbalism, zone: Icecrown, zone_id: 210}
+      - {name: Frost Lotus, count: 15, mode: herbalism, zone: Icecrown, zone_id: 210}
+      - {name: Dark Jade, count: 5, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Huge Citrine, count: 5, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Crystallized Fire, count: 50, mode: mining, zone: Sholazar Basin, zone_id: 3711, choice: "Raw equivalent of 5 Eternal Fire for the Earthsiege route"}
+      - {name: Saronite Ore, count: 112, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+
+  inscription:
+    display_name: "Inscription 1-450"
+    route_note: "The guide's 500-herb Northrend reserve supplies pigments and ink; 430-450 is completed through recurring Northrend Inscription Research rather than one deterministic craft batch."
+    materials:
+      - {name: Peacebloom, count: 120, mode: herbalism, zone: Durotar, zone_id: 14, choice: "Earthroot/Peacebloom/Silverleaf"}
+      - {name: Briarthorn, count: 110, mode: herbalism, zone: The Barrens, zone_id: 17, choice: "Briarthorn/Bruiseweed/Mageroyal/Stranglekelp/Swiftthistle"}
+      - {name: Kingsblood, count: 170, mode: herbalism, zone: Hillsbrad Foothills, zone_id: 267, choice: "Grave Moss/Kingsblood/Liferoot/Wild Steelbloom"}
+      - {name: Goldthorn, count: 180, mode: herbalism, zone: Arathi Highlands, zone_id: 45, choice: "Fadeleaf/Goldthorn/Khadgar's Whisker/Wintersbite"}
+      - {name: Sungrass, count: 240, mode: herbalism, zone: The Hinterlands, zone_id: 47, choice: "Arthas' Tears/Blindweed/Firebloom/Ghost Mushroom/Gromsblood/Purple Lotus/Sungrass"}
+      - {name: Golden Sansam, count: 120, mode: herbalism, zone: Felwood, zone_id: 361, choice: "Dreamfoil/Golden Sansam/Icecap/Mountain Silversage/Plaguebloom"}
+      - {name: Felweed, count: 180, mode: herbalism, zone: Hellfire Peninsula, zone_id: 3483, choice: "Outland pigment herbs"}
+      - {name: Goldclover, count: 500, mode: herbalism, zone: Borean Tundra, zone_id: 3537, choice: "Northrend pigment herbs"}
+
+  jewelcrafting:
+    display_name: "Jewelcrafting 1-450 (Earthsiege meta-gem finish)"
+    route_note: "The declared 420-450 route reserves 30 Earthsiege transmutes: 20 for 420-440 and 10 more for the guide's continue-meta-gems finish. Prospecting and late skill-up RNG can require a refill."
+    materials:
+      - {name: Copper Ore, count: 220, mode: mining, zone: Durotar, zone_id: 14}
+      - {name: Tigerseye, count: 15, mode: mining, zone: Durotar, zone_id: 14}
+      - {name: Malachite, count: 15, mode: mining, zone: Durotar, zone_id: 14}
+      - {name: Tin Ore, count: 120, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Shadowgem, count: 60, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Heavy Stone, count: 80, mode: mining, zone: Arathi Highlands, zone_id: 45}
+      - {name: Moss Agate, count: 30, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Mithril Ore, count: 284, mode: mining, zone: The Hinterlands, zone_id: 47}
+      - {name: Solid Stone, count: 90, mode: mining, zone: The Hinterlands, zone_id: 47}
+      - {name: Truesilver Ore, count: 56, mode: mining, zone: Winterspring, zone_id: 618}
+      - {name: Citrine, count: 25, mode: mining, zone: The Hinterlands, zone_id: 47}
+      - {name: Aquamarine, count: 35, mode: mining, zone: The Hinterlands, zone_id: 47}
+      - {name: Flask of Mojo, count: 40, mode: loot, zone: The Hinterlands, zone_id: 47}
+      - {name: Thorium Ore, count: 112, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Star Ruby, count: 10, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Large Opal, count: 21, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Azerothian Diamond, count: 20, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Huge Emerald, count: 10, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Adamantite Ore, count: 264, mode: mining, zone: Nagrand, zone_id: 3518}
+      - {name: Mote of Earth, count: 120, mode: mining, zone: Nagrand, zone_id: 3518}
+      - {name: Cobalt Ore, count: 120, mode: mining, zone: Borean Tundra, zone_id: 3537}
+      - {name: Saronite Ore, count: 240, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Crystallized Earth, count: 470, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Crystallized Shadow, count: 230, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Dark Jade, count: 30, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Huge Citrine, count: 30, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Crystallized Fire, count: 300, mode: mining, zone: Sholazar Basin, zone_id: 3711, choice: "Raw equivalent of 30 Eternal Fire for Earthsiege transmutes"}
+
+  engineering:
+    display_name: "Engineering 1-450"
+    route_note: "The guide's Gnomish Army Knife finish is represented by its farmable Saronite reserve; vendor tools are intentionally omitted. Green skill-ups can require extra Saronite."
+    materials:
+      - {name: Rough Stone, count: 60, mode: mining, zone: Durotar, zone_id: 14}
+      - {name: Copper Ore, count: 242, mode: mining, zone: Durotar, zone_id: 14}
+      - {name: Coarse Stone, count: 60, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Tin Ore, count: 110, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Silver Ore, count: 10, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Linen Cloth, count: 50, mode: loot, zone: The Barrens, zone_id: 17}
+      - {name: Heavy Stone, count: 60, mode: mining, zone: Arathi Highlands, zone_id: 45}
+      - {name: Moss Agate, count: 10, mode: mining, zone: The Barrens, zone_id: 17}
+      - {name: Wool Cloth, count: 60, mode: loot, zone: Hillsbrad Foothills, zone_id: 267}
+      - {name: Medium Leather, count: 15, mode: skinning, zone: The Barrens, zone_id: 17}
+      - {name: Iron Ore, count: 8, mode: mining, zone: Arathi Highlands, zone_id: 45}
+      - {name: Solid Stone, count: 120, mode: mining, zone: The Hinterlands, zone_id: 47}
+      - {name: Mithril Ore, count: 322, mode: mining, zone: The Hinterlands, zone_id: 47}
+      - {name: Mageweave Cloth, count: 20, mode: loot, zone: Tanaris, zone_id: 440}
+      - {name: Dense Stone, count: 60, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Thorium Ore, count: 270, mode: mining, zone: Un'Goro Crater, zone_id: 490}
+      - {name: Runecloth, count: 35, mode: loot, zone: Felwood, zone_id: 361}
+      - {name: Fel Iron Ore, count: 140, mode: mining, zone: Hellfire Peninsula, zone_id: 3483}
+      - {name: Mote of Earth, count: 40, mode: mining, zone: Nagrand, zone_id: 3518}
+      - {name: Mote of Fire, count: 20, mode: loot, zone: Shadowmoon Valley, zone_id: 3520}
+      - {name: Netherweave Cloth, count: 70, mode: loot, zone: Netherstorm, zone_id: 3523}
+      - {name: Adamantite Ore, count: 80, mode: mining, zone: Nagrand, zone_id: 3518}
+      - {name: Cobalt Ore, count: 560, mode: mining, zone: Borean Tundra, zone_id: 3537}
+      - {name: Frostweave Cloth, count: 7, mode: loot, zone: Borean Tundra, zone_id: 3537}
+      - {name: Crystallized Water, count: 68, mode: loot, zone: Borean Tundra, zone_id: 3537}
+      - {name: Crystallized Earth, count: 10, mode: mining, zone: Borean Tundra, zone_id: 3537}
+      - {name: Crystallized Fire, count: 15, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Borean Leather, count: 14, mode: skinning, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Crystallized Shadow, count: 70, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+      - {name: Saronite Ore, count: 1110, mode: mining, zone: Sholazar Basin, zone_id: 3711}
+
+  tailoring:
+    display_name: "Tailoring 1-450 (Frostweave Bag finish)"
+    route_note: "The guide omits 440-450 from its shopping list. This route adds the upper end of its suggested 40 additional Frostweave Bags: 2400 Frostweave Cloth and 480 Infinite Dust beyond the 1-440 list. Green skill-up RNG can require a refill."
+    materials:
+      - {name: Linen Cloth, count: 204, mode: loot, zone: The Barrens, zone_id: 17}
+      - {name: Wool Cloth, count: 135, mode: loot, zone: Hillsbrad Foothills, zone_id: 267}
+      - {name: Silk Cloth, count: 804, mode: loot, zone: Tanaris, zone_id: 440}
+      - {name: Mageweave Cloth, count: 376, mode: loot, zone: Tanaris, zone_id: 440}
+      - {name: Runecloth, count: 800, mode: loot, zone: Felwood, zone_id: 361}
+      - {name: Netherweave Cloth, count: 700, mode: loot, zone: Netherstorm, zone_id: 3523}
+      - {name: Knothide Leather, count: 20, mode: skinning, zone: Nagrand, zone_id: 3518}
+      - {name: Frostweave Cloth, count: 5375, mode: loot, zone: Icecrown, zone_id: 210}
+      - {name: Arcane Dust, count: 12, mode: auction, zone: Orgrimmar, zone_id: 1637}
+      - {name: Infinite Dust, count: 720, mode: auction, zone: Orgrimmar, zone_id: 1637}

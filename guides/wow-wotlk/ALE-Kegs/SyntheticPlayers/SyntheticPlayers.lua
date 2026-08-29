@@ -13,6 +13,15 @@ local SYNTHETIC = {
     TablePrefix = "acore_characters.",
 }
 
+-- Only these canonical Playerbots are backed by the persona model. Other
+-- Playerbots keep their native deterministic AI and never enter this queue.
+local CONTROLLED_PERSONAS = {
+    ["lyra"] = true,
+    ["celene"] = true,
+    ["ray"] = true,
+    ["browntown"] = true,
+}
+
 local PORTAL_SPELLS = {
     ["STORMWIND"] = 10059,
     ["IRONFORGE"] = 11416,
@@ -92,7 +101,37 @@ local function IsHumanPlayer(player)
 end
 
 local function IsSyntheticTarget(player)
-    return player and player:IsInWorld() and player:IsBot()
+    return player
+        and player:IsInWorld()
+        and player:IsBot()
+        and CONTROLLED_PERSONAS[string.lower(player:GetName() or "")] == true
+end
+
+local function HasCadiaAuthority(player)
+    if not player or not player:IsInWorld() then return false end
+
+    local result = CharDBQuery(string.format(
+        "SELECT 1 FROM %ssynthetic_command_authorities " ..
+        "WHERE character_guid = %d AND authority_role = 'CADIA' AND enabled = 1 LIMIT 1;",
+        SYNTHETIC.TablePrefix,
+        player:GetGUIDLow()
+    ))
+    return result ~= nil
+end
+
+local function IsAcceptedIssuer(player)
+    return IsHumanPlayer(player) or HasCadiaAuthority(player)
+end
+
+local function IsAuthorizedCommander(botPlayer, issuer)
+    if not botPlayer or not issuer then return false end
+    local group = botPlayer:GetGroup()
+    if not group or not group:IsMember(issuer:GetGUID()) then
+        return false
+    end
+
+    local issuerGuid = issuer:GetGUID()
+    return group:IsLeader(issuerGuid) or group:IsAssistant(issuerGuid) or HasCadiaAuthority(issuer)
 end
 
 local function FindFirstBot(players)
@@ -110,15 +149,24 @@ local function FindGroupBot(player)
 end
 
 local function FindMentionedBot(message)
-    local name = message and string.match(message, "@([%a][%w]*)") or nil
-    if not name then return nil end
+    local explicitName = message and string.match(message, "@([%a][%w]*)") or nil
+    if explicitName then
+        local explicitPlayer = GetPlayerByName(explicitName)
+        if IsSyntheticTarget(explicitPlayer) then return explicitPlayer end
+    end
 
-    local player = GetPlayerByName(name)
-    return IsSyntheticTarget(player) and player or nil
+    local normalized = string.lower(message or "")
+    for personaName, _ in pairs(CONTROLLED_PERSONAS) do
+        if string.match(normalized, "^%s*" .. personaName .. "[%s,:]") then
+            local addressedPlayer = GetPlayerByName(personaName)
+            if IsSyntheticTarget(addressedPlayer) then return addressedPlayer end
+        end
+    end
+    return nil
 end
 
 local function QueueInboxEvent(eventType, sender, target, rawMessage)
-    if not IsHumanPlayer(sender) then return end
+    if not IsAcceptedIssuer(sender) then return end
 
     local senderGuid = sender:GetGUIDLow()
     local senderName = EscapeSql(sender:GetName())
@@ -169,7 +217,7 @@ end
 
 -- Say/yell are routed here. Only explicit @BotName mentions invoke the LLM.
 local function OnPlayerChat(event, player, message, chatType, language)
-    if not SYNTHETIC.Enabled or not IsHumanPlayer(player) or not message or message == "" or IsCommand(message) then
+    if not SYNTHETIC.Enabled or not IsAcceptedIssuer(player) or not message or message == "" or IsCommand(message) then
         return
     end
 
@@ -180,14 +228,14 @@ local function OnPlayerChat(event, player, message, chatType, language)
 end
 
 local function OnPlayerWhisper(event, player, message, chatType, language, receiver)
-    if not SYNTHETIC.Enabled or not IsHumanPlayer(player) or not IsSyntheticTarget(receiver) then return end
+    if not SYNTHETIC.Enabled or not IsAcceptedIssuer(player) or not IsSyntheticTarget(receiver) then return end
     if not message or message == "" or IsCommand(message) then return end
 
     QueueInboxEvent("CHAT_WHISPER", player, receiver, message)
 end
 
 local function OnPlayerGroupChat(event, player, message, chatType, language, group)
-    if not SYNTHETIC.Enabled or not IsHumanPlayer(player) or not message or message == "" or IsCommand(message) then
+    if not SYNTHETIC.Enabled or not IsAcceptedIssuer(player) or not message or message == "" or IsCommand(message) then
         return
     end
 
@@ -198,7 +246,7 @@ local function OnPlayerGroupChat(event, player, message, chatType, language, gro
 end
 
 local function OnPlayerGuildChat(event, player, message, chatType, language, guild)
-    if not SYNTHETIC.Enabled or not IsHumanPlayer(player) or not message or message == "" or IsCommand(message) then
+    if not SYNTHETIC.Enabled or not IsAcceptedIssuer(player) or not message or message == "" or IsCommand(message) then
         return
     end
 
@@ -209,7 +257,7 @@ local function OnPlayerGuildChat(event, player, message, chatType, language, gui
 end
 
 local function OnPlayerTextEmote(event, player, textEmote, emoteNum, targetGuid)
-    if not SYNTHETIC.Enabled or not IsHumanPlayer(player) then return end
+    if not SYNTHETIC.Enabled or not IsAcceptedIssuer(player) then return end
 
     local target = targetGuid and GetPlayerByGUID(targetGuid) or nil
     if IsSyntheticTarget(target) then
@@ -266,8 +314,34 @@ end
 local function DeliverBotMessage(botPlayer, targetPlayer, channelType, message)
     if channelType == "WHISPER" and targetPlayer then
         botPlayer:Whisper(message, 0, targetPlayer)
-    elseif channelType == "PARTY" and targetPlayer then
-        botPlayer:SendChatMessageToPlayer(2, 0, message, targetPlayer)
+    elseif channelType == "PARTY" then
+        local group = botPlayer:GetGroup()
+        if group then
+            -- Stock 3.3.5a clients discard a server-forged player party packet
+            -- from a bot session even when its wire shape matches native chat.
+            -- Use the server-supported system channel as a reliable shared
+            -- fallback and label it as party speech. Every human receives the
+            -- exact same message and bot-only sessions are skipped.
+            local sharedMessage = string.format(
+                "|cff66ccff[Party] %s:|r %s",
+                botPlayer:GetName(),
+                message
+            )
+            local recipients = 0
+            for _, member in ipairs(group:GetMembers() or {}) do
+                if IsHumanPlayer(member) then
+                    member:SendBroadcastMessage(sharedMessage)
+                    recipients = recipients + 1
+                end
+            end
+            print(string.format(
+                ">> [SyntheticPlayers] Shared %s party reply with %d human group members.",
+                botPlayer:GetName(),
+                recipients
+            ))
+        elseif targetPlayer then
+            botPlayer:SendChatMessageToPlayer(2, 0, message, targetPlayer)
+        end
     elseif channelType == "GUILD" and targetPlayer then
         botPlayer:SendChatMessageToPlayer(4, 0, message, targetPlayer)
     elseif channelType == "YELL" then
@@ -354,6 +428,9 @@ local function ApplyBoundedAction(botPlayer, targetPlayer, actionCommand)
         if not PlayersShareGroup(botPlayer, targetPlayer) then
             return false, "Join my group first, and then I can open the portal.", "not_grouped"
         end
+        if not IsAuthorizedCommander(botPlayer, targetPlayer) then
+            return false, "The party leader, raid leader, raid assistant, or Cadia needs to give that order.", "authority_denied"
+        end
         if botPlayer:IsInCombat() then
             return false, "I cannot hold a portal open while we are fighting.", "in_combat"
         end
@@ -383,6 +460,9 @@ local function ApplyBoundedAction(botPlayer, targetPlayer, actionCommand)
         if not PlayersShareGroup(botPlayer, targetPlayer) then
             return false, "Join my group first, and I will set out refreshments for everyone.", "not_grouped"
         end
+        if not IsAuthorizedCommander(botPlayer, targetPlayer) then
+            return false, "The party leader, raid leader, raid assistant, or Cadia needs to give that order.", "authority_denied"
+        end
         if botPlayer:IsInCombat() then
             return false, "I cannot set the refreshment table while we are fighting.", "in_combat"
         end
@@ -407,6 +487,9 @@ local function ApplyBoundedAction(botPlayer, targetPlayer, actionCommand)
         end
         if not PlayersShareGroup(botPlayer, targetPlayer) then
             return false, "Join my group first, and I will strengthen the party's intellect.", "not_grouped"
+        end
+        if not IsAuthorizedCommander(botPlayer, targetPlayer) then
+            return false, "The party leader, raid leader, raid assistant, or Cadia needs to give that order.", "authority_denied"
         end
         if botPlayer:IsInCombat() then
             return false, "I cannot prepare the party's brilliance while we are fighting.", "in_combat"

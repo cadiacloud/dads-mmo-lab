@@ -1,0 +1,77 @@
+version: 1
+game_build: "Wrath of the Lich King 3.3.5a (12340)"
+purpose: "Validated gathering objectives for controlled synthetic Playerbots"
+sources:
+  mining: "https://www.wow-professions.com/wotlk/mining-leveling-guide-wotlk-classic"
+  herbalism: "https://www.wow-professions.com/wotlk/herbalism-leveling-guide-wotlk-classic"
+  skinning: "https://www.wow-professions.com/wotlk/skinning-leveling-guide-wotlk-classic"
+
+# The LLM may select one zone from each stage. It may not change the skill
+# ranges, materials, character-level gates, bank policy, or known profession.
+# Character-level gates keep level-with-the-party personas out of zones they
+# cannot reasonably survive. They are deliberately more conservative than the
+# profession trainer's minimum level.
+professions:
+  mining:
+    display_name: "Mining"
+    skill_id: 186
+    tool_item_id: 2901
+    tool_name: "Mining Pick"
+    deposit_category: "mining"
+    stages:
+      - {skill_from: 1, skill_to: 65, min_character_level: 5, materials: ["Copper Ore", "Rough Stone"], zones: [{name: "Durotar", zone_id: 14}, {name: "Mulgore", zone_id: 215}, {name: "Tirisfal Glades", zone_id: 85}]}
+      - {skill_from: 65, skill_to: 125, min_character_level: 10, materials: ["Copper Ore", "Tin Ore", "Silver Ore", "Coarse Stone"], zones: [{name: "The Barrens", zone_id: 17}, {name: "Hillsbrad Foothills", zone_id: 267}, {name: "Ashenvale", zone_id: 331}]}
+      - {skill_from: 125, skill_to: 175, min_character_level: 20, materials: ["Iron Ore", "Tin Ore", "Gold Ore", "Heavy Stone"], zones: [{name: "Arathi Highlands", zone_id: 45}, {name: "Desolace", zone_id: 405}, {name: "Thousand Needles", zone_id: 400}]}
+      - {skill_from: 175, skill_to: 245, min_character_level: 35, materials: ["Mithril Ore", "Truesilver Ore", "Solid Stone"], zones: [{name: "The Hinterlands", zone_id: 47}, {name: "Tanaris", zone_id: 440}]}
+      - {skill_from: 245, skill_to: 275, min_character_level: 45, materials: ["Mithril Ore", "Truesilver Ore", "Thorium Ore", "Dense Stone"], zones: [{name: "Un'Goro Crater", zone_id: 490}, {name: "Blasted Lands", zone_id: 4}, {name: "Felwood", zone_id: 361}]}
+      - {skill_from: 275, skill_to: 300, min_character_level: 50, materials: ["Thorium Ore", "Mithril Ore", "Dense Stone"], zones: [{name: "Un'Goro Crater", zone_id: 490}, {name: "Eastern Plaguelands", zone_id: 139}, {name: "Winterspring", zone_id: 618}, {name: "Burning Steppes", zone_id: 46}]}
+      - {skill_from: 300, skill_to: 325, min_character_level: 58, materials: ["Fel Iron Ore", "Mote of Earth", "Eternium Ore"], zones: [{name: "Hellfire Peninsula", zone_id: 3483}]}
+      - {skill_from: 325, skill_to: 350, min_character_level: 62, materials: ["Adamantite Ore", "Fel Iron Ore", "Eternium Ore"], zones: [{name: "Zangarmarsh", zone_id: 3521}, {name: "Terokkar Forest", zone_id: 3519}]}
+      - {skill_from: 350, skill_to: 400, min_character_level: 68, materials: ["Cobalt Ore", "Crystallized Earth"], zones: [{name: "Borean Tundra", zone_id: 3537}, {name: "Howling Fjord", zone_id: 495}]}
+      - {skill_from: 400, skill_to: 450, min_character_level: 76, materials: ["Saronite Ore", "Titanium Ore", "Crystallized Earth", "Crystallized Shadow"], zones: [{name: "Sholazar Basin", zone_id: 3711}, {name: "The Storm Peaks", zone_id: 67}]}
+
+  herbalism:
+    display_name: "Herbalism"
+    skill_id: 182
+    tool_item_id: 0
+    tool_name: ""
+    deposit_category: "herbalism"
+    stages:
+      - {skill_from: 1, skill_to: 70, min_character_level: 5, materials: ["Peacebloom", "Silverleaf", "Earthroot"], zones: [{name: "Durotar", zone_id: 14}, {name: "Mulgore", zone_id: 215}, {name: "Tirisfal Glades", zone_id: 85}]}
+      - {skill_from: 70, skill_to: 115, min_character_level: 10, materials: ["Mageroyal", "Briarthorn", "Stranglekelp"], zones: [{name: "The Barrens", zone_id: 17}, {name: "Silverpine Forest", zone_id: 130}, {name: "Darkshore", zone_id: 148}]}
+      - {skill_from: 115, skill_to: 170, min_character_level: 20, materials: ["Bruiseweed", "Wild Steelbloom", "Stranglekelp", "Kingsblood", "Liferoot"], zones: [{name: "Hillsbrad Foothills", zone_id: 267}, {name: "Wetlands", zone_id: 11}, {name: "Stonetalon Mountains", zone_id: 406}]}
+      - {skill_from: 170, skill_to: 205, min_character_level: 30, materials: ["Kingsblood", "Liferoot", "Fadeleaf", "Goldthorn", "Khadgar's Whisker"], zones: [{name: "Stranglethorn Vale", zone_id: 33}, {name: "Arathi Highlands", zone_id: 45}]}
+      - {skill_from: 205, skill_to: 230, min_character_level: 40, materials: ["Purple Lotus", "Firebloom"], zones: [{name: "Tanaris", zone_id: 440}, {name: "Searing Gorge", zone_id: 51}]}
+      - {skill_from: 230, skill_to: 270, min_character_level: 45, materials: ["Sungrass", "Purple Lotus", "Ghost Mushroom", "Golden Sansam"], zones: [{name: "The Hinterlands", zone_id: 47}]}
+      - {skill_from: 270, skill_to: 300, min_character_level: 50, materials: ["Sungrass", "Gromsblood", "Golden Sansam", "Dreamfoil", "Mountain Silversage", "Plaguebloom"], zones: [{name: "Felwood", zone_id: 361}]}
+      - {skill_from: 300, skill_to: 315, min_character_level: 58, materials: ["Felweed", "Dreaming Glory"], zones: [{name: "Hellfire Peninsula", zone_id: 3483}]}
+      - {skill_from: 315, skill_to: 325, min_character_level: 62, materials: ["Felweed", "Dreaming Glory"], zones: [{name: "Nagrand", zone_id: 3518}, {name: "Blade's Edge Mountains", zone_id: 3522}]}
+      - {skill_from: 325, skill_to: 350, min_character_level: 64, materials: ["Felweed", "Dreaming Glory", "Terocone"], zones: [{name: "Terokkar Forest", zone_id: 3519}, {name: "Netherstorm", zone_id: 3523}]}
+      - {skill_from: 350, skill_to: 400, min_character_level: 68, materials: ["Goldclover", "Tiger Lily"], zones: [{name: "Howling Fjord", zone_id: 495}, {name: "Borean Tundra", zone_id: 3537}, {name: "Grizzly Hills", zone_id: 394}]}
+      - {skill_from: 400, skill_to: 435, min_character_level: 76, materials: ["Adder's Tongue", "Goldclover", "Tiger Lily"], zones: [{name: "Sholazar Basin", zone_id: 3711}]}
+      - {skill_from: 435, skill_to: 450, min_character_level: 77, materials: ["Lichbloom", "Icethorn"], zones: [{name: "The Storm Peaks", zone_id: 67}]}
+
+  skinning:
+    display_name: "Skinning"
+    skill_id: 393
+    tool_item_id: 7005
+    tool_name: "Skinning Knife"
+    deposit_category: "skinning"
+    stages:
+      - {skill_from: 1, skill_to: 75, min_character_level: 5, materials: ["Ruined Leather Scraps", "Light Leather", "Light Hide"], zones: [{name: "Durotar", zone_id: 14}, {name: "Dun Morogh", zone_id: 1}]}
+      - {skill_from: 75, skill_to: 155, min_character_level: 15, materials: ["Light Leather", "Medium Leather", "Medium Hide"], zones: [{name: "The Barrens", zone_id: 17}, {name: "Loch Modan", zone_id: 38}, {name: "Wetlands", zone_id: 11}]}
+      - {skill_from: 155, skill_to: 205, min_character_level: 30, materials: ["Medium Leather", "Heavy Leather", "Heavy Hide"], zones: [{name: "Thousand Needles", zone_id: 400}, {name: "Arathi Highlands", zone_id: 45}]}
+      - {skill_from: 205, skill_to: 300, min_character_level: 40, materials: ["Heavy Leather", "Thick Leather", "Rugged Leather", "Thick Hide", "Rugged Hide"], zones: [{name: "Feralas", zone_id: 357}, {name: "Un'Goro Crater", zone_id: 490}]}
+      - {skill_from: 300, skill_to: 330, min_character_level: 58, materials: ["Knothide Leather Scraps", "Knothide Leather"], zones: [{name: "Hellfire Peninsula", zone_id: 3483}]}
+      - {skill_from: 330, skill_to: 350, min_character_level: 64, materials: ["Knothide Leather", "Thick Clefthoof Leather"], zones: [{name: "Nagrand", zone_id: 3518}]}
+      - {skill_from: 350, skill_to: 395, min_character_level: 68, materials: ["Borean Leather Scraps", "Borean Leather", "Arctic Fur"], zones: [{name: "Borean Tundra", zone_id: 3537}]}
+      - {skill_from: 395, skill_to: 450, min_character_level: 76, materials: ["Borean Leather", "Arctic Fur"], zones: [{name: "Sholazar Basin", zone_id: 3711}]}
+
+bank_policy:
+  guild_tab: 0
+  deposit_each_eligible_stack: true
+  deposit_when_free_slots_below: 6
+  deposit_on_stage_completion: true
+  retain_tools: true
+  retain_quest_items: true
+  retain_equipment: true

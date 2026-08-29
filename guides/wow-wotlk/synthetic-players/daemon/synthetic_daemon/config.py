@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 import yaml
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -32,6 +32,14 @@ class DatabaseConfig(BaseModel):
     pool_max_size: int = Field(default=5)
 
 
+class DirectorConfig(BaseModel):
+    """High-level Playerbots director settings."""
+
+    enabled: bool = Field(default=True)
+    intent_ttl_seconds: int = Field(default=30, ge=5, le=120)
+    result_batch_size: int = Field(default=5, ge=1, le=50)
+
+
 class DaemonSettings(BaseSettings):
     """Global daemon settings."""
     model_config = SettingsConfigDict(
@@ -43,9 +51,22 @@ class DaemonSettings(BaseSettings):
 
     llm: LLMConfig = Field(default_factory=LLMConfig)
     db: DatabaseConfig = Field(default_factory=DatabaseConfig)
+    director: DirectorConfig = Field(default_factory=DirectorConfig)
     poll_interval_ms: int = Field(default=500, description="Inbox polling interval in ms")
     max_batch_size: int = Field(default=5, description="Max inbox events processed per tick")
     personas_file: str = Field(default="personas.yaml", description="Path to custom personas YAML")
+    profession_guides_file: str = Field(
+        default="config/profession-guides.yaml",
+        description="Validated WotLK gathering guide catalog used by the one-shot LLM planner",
+    )
+    material_kits_file: str = Field(
+        default="config/material-kits.yaml",
+        description="Source-backed material quantities for real-player profession leveling kits",
+    )
+    controlled_personas: List[str] = Field(
+        default_factory=lambda: ["Lyra", "Celene", "Ray", "Browntown"],
+        description="Only these canonical Playerbots may enter the LLM/action pipeline",
+    )
     debug: bool = Field(default=False)
 
 
