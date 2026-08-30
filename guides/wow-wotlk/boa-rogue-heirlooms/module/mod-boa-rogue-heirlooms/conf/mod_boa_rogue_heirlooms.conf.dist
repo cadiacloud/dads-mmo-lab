@@ -1,0 +1,13 @@
+[worldserver]
+
+########################################
+# BOA Rogue Heirlooms
+########################################
+#
+#    BoaRogueHeirlooms.Enable
+#        Description: Enable exact server-authoritative stat and weapon curves
+#                     for custom entries 900100-900116.
+#        Default:     1
+#
+
+BoaRogueHeirlooms.Enable = 1

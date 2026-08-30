@@ -110,6 +110,41 @@ Type these in the WoW chat box while playing:
 
 Look up item IDs on wowhead.com
 
+### Learn Riding and the Spectral Tiger
+
+GM commands act on the selected player. Select your own portrait, or clear any
+other player target, before using these commands on yourself.
+
+The Swift Spectral Tiger can be granted as the normal learnable item:
+
+```
+.additem 49284 1
+```
+
+Right-click the reins in your bags to learn the mount. To learn the same mount
+spell directly without creating the item:
+
+```
+.learn 42777
+```
+
+The slower Spectral Tiger uses item `49283` and spell `42776`.
+
+To grant every WotLK riding rank, Cold Weather Flying, and a complete
+300/300 Riding skill line, use:
+
+```
+.learn 33388
+.learn 33391
+.learn 34090
+.learn 34091
+.learn 54197
+.setskill 762 300 300
+```
+
+These commands grant riding capability, not every mount. Add or learn each
+mount separately.
+
 ### Change Time of Day
 ```
 .time set 12 0

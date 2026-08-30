@@ -125,8 +125,10 @@ Turns out — for a lot of classic MMOs — you can. The emulator community has 
 | `WoW-WotLK-CREATE-ACCOUNTS.md` | Quick reference for creating player accounts |
 | `WoW-Playerbots-Windows-HOWTO.md` | Windows-specific Playerbots setup guide |
 | `SERVER-CHANGES-2026-08-29.md` | Dated Cadia realm deployment, validation, compatibility, and rollback record |
+| `SERVER-CHANGES-2026-08-30.md` | Incremental BOA rogue deployment and verified mount/riding GM reference |
 | `synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md` | Local-LLM persona bridge with typed, authorized Playerbots direction |
 | `novice-death-knight/README.md` | Opt-in level-1 Death Knight progression module and rollback guide |
+| `boa-rogue-heirlooms/README.md` | Scalable heroic-endpoint BOA rogue set, DBC/client requirements, and rollback guide |
 | `patches/` | Reviewed compatibility patches used by the recorded deployment |
 | `PLAYERBOTS-RAID-OPERATIONS.md` | ICC strategy coverage and boss-recovery runbook |
 | `gm-level-255/README.md` | Level-255 GM equipment, ALE stat bonus, and client DBC patch |

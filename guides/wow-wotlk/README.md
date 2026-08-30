@@ -72,6 +72,19 @@ limitations, and rollback boundaries for the current Cadia WotLK deployment.
 Machine-local credentials, account identities, network addresses, and private
 conversation data are intentionally excluded.
 
+#### [Cadia Realm Incremental Record (2026-08-30)](./SERVER-CHANGES-2026-08-30.md)
+
+Records the deployed heroic-endpoint BOA rogue set, its server and client
+compatibility boundary, validation evidence, rollback procedure, and verified
+Spectral Tiger/riding GM commands.
+
+#### [Heroic-endpoint BOA Rogue Set](./boa-rogue-heirlooms/README.md)
+
+Adds a reversible, rogue-only account-bound set that scales from level 1 to
+original Warglaive power at level 70 and heroic ICC/RS-equivalent endpoints at
+level 80. It includes server module, SQL, DBC builders, client MPQ tooling, and
+the required bounded core hook.
+
 #### [Synthetic Players](./synthetic-players/HOWTO-SYNTHETIC-PLAYERS.md)
 
 Adds local-LLM persona dialogue, audited mage actions, and a typed high-level
